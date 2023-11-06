@@ -3,7 +3,7 @@ use std::marker::PhantomData;
 
 // TODO: try making a Call module, whih allows calling an arbitrary method on the input.
 
-/// Access the input that is stored in a wrapper structure.
+/// Applies module `T` into an input field from a wrapper.
 #[derive(Debug, Default, Clone, ResetParams, ZeroGrads, UpdateParams)]
 #[cfg_attr(feature = "safetensors", derive(SaveSafeTensors, LoadSafeTensors))]
 #[repr(transparent)]
@@ -50,10 +50,10 @@ mod tests {
         // input is (Input, Input)
         pub input_to_wrapper: split1::FromTuple,
 
-        // input is Split1 { Input, Input }
+        // input is Split1<Input, Input>
         pub t: On<split1::forward, T>,
 
-        // input is Split1 { T::Output, Input }
+        // input is Split1<T::Output, Input>
         pub input_to_tuple: split1::IntoTuple,
 
         // input is (T::Output, Input)
@@ -62,7 +62,7 @@ mod tests {
     }
 
     #[test]
-    fn test_residual_add_backward() {
+    fn test_input_wrapper_struct() {
         let dev: TestDevice = Default::default();
 
         let model = dev.build_module::<f32>(<ResidualAdd1<LinearConstConfig<2, 2>>>::default());
@@ -104,10 +104,10 @@ mod tests {
         // input is (Input, Input)
         pub input_to_wrapper: split2::FromTuple,
 
-        // input is Split2 ( Input, Input )
+        // input is Split2<Input, Input>
         pub t: On<split2::_0, T>,
 
-        // input is Split2 ( T::Output, Input )
+        // input is Split2<T::Output, Input>
         pub input_to_tuple: split2::IntoTuple,
 
         // input is (T::Output, Input)
@@ -116,7 +116,7 @@ mod tests {
     }
 
     #[test]
-    fn test_residual_add_backward2() {
+    fn test_input_wrapper_tuple_struct() {
         let dev: TestDevice = Default::default();
 
         let model = dev.build_module::<f32>(<ResidualAdd2<LinearConstConfig<2, 2>>>::default());
