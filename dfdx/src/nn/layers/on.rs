@@ -71,7 +71,8 @@ mod tests {
     fn test_residual_add_backward() {
         let dev: TestDevice = Default::default();
 
-        let model = dev.build_module::<f32>(<ResidualAdd1<LinearConstConfig<2, 2>>>::default());
+        let model =
+            dev.build_module::<TestDtype>(<ResidualAdd1<LinearConstConfig<2, 2>>>::default());
 
         let x: Tensor<Rank2<4, 2>, f32, _> = dev.sample_normal();
         let x = x.to_dtype::<TestDtype>();
@@ -112,7 +113,8 @@ mod tests {
     fn test_residual_add_backward2() {
         let dev: TestDevice = Default::default();
 
-        let model = dev.build_module::<f32>(<ResidualAdd2<LinearConstConfig<2, 2>>>::default());
+        let model =
+            dev.build_module::<TestDtype>(<ResidualAdd2<LinearConstConfig<2, 2>>>::default());
 
         let x: Tensor<Rank2<4, 2>, f32, _> = dev.sample_normal();
         let x = x.to_dtype::<TestDtype>();
