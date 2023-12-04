@@ -9,6 +9,7 @@ use std::marker::PhantomData;
 #[repr(transparent)]
 pub struct On<N, T> {
     #[module]
+    #[cfg_attr(feature = "safetensors", serialize)]
     pub t: T,
 
     pub _n: PhantomData<N>,
