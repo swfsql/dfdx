@@ -84,7 +84,7 @@ where
 }
 
 /// See [ConvTrans2DConfig].
-#[derive(Debug, Clone, UpdateParams, ZeroGrads)]
+#[derive(Debug, Clone, UpdateParams, ZeroGrads, WithGrads)]
 #[cfg_attr(feature = "safetensors", derive(SaveSafeTensors, LoadSafeTensors))]
 pub struct ConvTrans2D<
     InChan,
