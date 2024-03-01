@@ -23,6 +23,8 @@ pub trait Device<E: Dtype>:
 
     // splits
     + super::super::split_tensor_along::SplitAlongKernel<E>
+    + super::super::unstack::UnstackKernel<E>
+    + super::super::unstack::UnstackKernel<usize>
 
     // optimizers
     + super::super::adam::AdamKernel<E>
