@@ -10,7 +10,7 @@ use crate::prelude::*;
 /// # use dfdx::prelude::*;
 /// # use dfdx::*;
 /// # let dev: Cpu = Default::default();
-/// type Model = ResidualMul<ReLU>;
+/// type Model = ResidualMul<ops::ReLU>;
 /// let model = dev.build_module::<f32>(Model::default());
 /// let x = dev.tensor([-2.0, -1.0, 0.0, 1.0, 2.0]);
 /// let y = model.forward(x);

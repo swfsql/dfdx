@@ -8,16 +8,21 @@ use crate::prelude::*;
 /// - `STRIDE`: How far to move the kernel each step. Defaults to `1`
 /// - `PADDING`: How much zero padding to add around the images. Defaults to `0`.
 /// - `DILATION` How dilated the kernel should be. Defaults to `1`.
-#[derive(Debug, Default, Clone, CustomModule)]
+#[derive(Clone, Debug, Default, ResetParams, UpdateParams, ZeroGrads)]
+#[cfg_attr(feature = "safetensors", derive(SaveSafeTensors, LoadSafeTensors))]
 pub struct MinPool2D<
     KernelSize: Dim,
     Stride: Dim = Const<1>,
     Padding: Dim = Const<0>,
     Dilation: Dim = Const<1>,
 > {
+    #[cfg_attr(feature = "safetensors", serialize)]
     pub kernel_size: KernelSize,
+    #[cfg_attr(feature = "safetensors", serialize)]
     pub stride: Stride,
+    #[cfg_attr(feature = "safetensors", serialize)]
     pub padding: Padding,
+    #[cfg_attr(feature = "safetensors", serialize)]
     pub dilation: Dilation,
 }
 
@@ -27,6 +32,15 @@ pub type MinPool2DConst<
     const PADDING: usize = 0,
     const DILATION: usize = 1,
 > = MinPool2D<Const<KERNEL_SIZE>, Const<STRIDE>, Const<PADDING>, Const<DILATION>>;
+
+impl<K: Dim, S: Dim, P: Dim, D: Dim, Elem: Dtype, Dev: Device<Elem>> BuildOnDevice<Elem, Dev>
+    for MinPool2D<K, S, P, D>
+{
+    type Built = Self;
+    fn try_build_on_device(&self, _device: &Dev) -> Result<Self::Built, crate::tensor::Error> {
+        Ok(self.clone())
+    }
+}
 
 impl<K: Dim, S: Dim, P: Dim, L: Dim, Img: TryPool2D<K, S, P, L>> Module<Img>
     for MinPool2D<K, S, P, L>

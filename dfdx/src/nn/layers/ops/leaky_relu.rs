@@ -1,12 +1,20 @@
 use crate::prelude::*;
 
 /// ReLU but maintains a small gradient if the input values are negative.
-#[derive(Debug, Clone, Copy, CustomModule)]
-pub struct LeakyReLU(pub f64);
+#[derive(Clone, Copy, Debug, ResetParams, UpdateParams, ZeroGrads)]
+#[cfg_attr(feature = "safetensors", derive(SaveSafeTensors, LoadSafeTensors))]
+pub struct LeakyReLU(#[cfg_attr(feature = "safetensors", serialize)] pub f64);
 
 impl Default for LeakyReLU {
     fn default() -> Self {
         Self(0.05)
+    }
+}
+
+impl<E: Dtype, D: Device<E>> BuildOnDevice<E, D> for LeakyReLU {
+    type Built = Self;
+    fn try_build_on_device(&self, _device: &D) -> Result<Self::Built, crate::tensor::Error> {
+        Ok(*self)
     }
 }
 

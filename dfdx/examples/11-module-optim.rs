@@ -7,11 +7,11 @@ use dfdx::prelude::*;
 #[built(Mlp)]
 struct MlpConfig {
     l1: LinearConstConfig<5, 32>,
-    act1: ReLU,
+    act1: ops::ReLU,
     l2: LinearConstConfig<32, 32>,
-    act2: ReLU,
+    act2: ops::ReLU,
     l3: LinearConstConfig<32, 2>,
-    act3: Tanh,
+    act3: ops::Tanh,
 }
 
 fn main() {

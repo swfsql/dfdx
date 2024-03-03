@@ -17,10 +17,10 @@ use dfdx::prelude::*;
 struct MlpConfig {
     // Linear with compile time input size & runtime known output size
     linear1: LinearConfig<Const<784>, usize>,
-    act1: ReLU,
+    act1: ops::ReLU,
     // Linear with runtime input & output size
     linear2: LinearConfig<usize, usize>,
-    act2: Tanh,
+    act2: ops::Tanh,
     // Linear with runtime input & compile time output size.
     linear3: LinearConfig<usize, Const<10>>,
 }

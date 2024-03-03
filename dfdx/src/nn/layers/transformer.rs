@@ -4,7 +4,7 @@ use crate::prelude::*;
 #[built(FeedForward)]
 pub struct FeedForwardConfig<Model: Dim, F: Dim> {
     pub l1: LinearConfig<Model, F>,
-    pub act1: ReLU,
+    pub act1: ops::ReLU,
     pub l2: LinearConfig<F, Model>,
 }
 
@@ -39,7 +39,7 @@ impl<Model: Dim, NumHeads: Dim, F: Dim> EncoderBlockConfig<Model, NumHeads, F> {
             norm1: LayerNorm1DConfig(model),
             ff: ResidualAdd(FeedForwardConfig {
                 l1: LinearConfig::new(model, f),
-                act1: ReLU,
+                act1: ops::ReLU,
                 l2: LinearConfig::new(f, model),
             }),
             norm2: LayerNorm1DConfig(model),
@@ -89,7 +89,7 @@ impl<Model: Dim, NumHeads: Dim, F: Dim> DecoderBlockConfig<Model, NumHeads, F> {
             norm2: LayerNorm1DConfig(model),
             ff: ResidualAdd(FeedForwardConfig {
                 l1: LinearConfig::new(model, f),
-                act1: ReLU,
+                act1: ops::ReLU,
                 l2: LinearConfig::new(f, model),
             }),
             norm3: LayerNorm1DConfig(model),

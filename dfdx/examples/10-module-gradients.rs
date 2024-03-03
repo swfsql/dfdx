@@ -3,9 +3,9 @@ use dfdx::prelude::*;
 #[derive(Clone, Default, Debug, Sequential)]
 struct MlpConfig<const I: usize, const O: usize> {
     linear1: LinearConstConfig<I, 64>,
-    act1: ReLU,
+    act1: ops::ReLU,
     linear2: LinearConstConfig<64, 64>,
-    act2: ReLU,
+    act2: ops::ReLU,
     linear3: LinearConstConfig<64, O>,
 }
 

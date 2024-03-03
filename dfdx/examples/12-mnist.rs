@@ -52,9 +52,9 @@ impl ExactSizeDataset for MnistTrainSet {
 
 // our network structure
 type Mlp = (
-    (LinearConstConfig<784, 512>, ReLU),
-    (LinearConstConfig<512, 128>, ReLU),
-    (LinearConstConfig<128, 32>, ReLU),
+    (LinearConstConfig<784, 512>, ops::ReLU),
+    (LinearConstConfig<512, 128>, ops::ReLU),
+    (LinearConstConfig<128, 32>, ops::ReLU),
     LinearConstConfig<32, 10>,
 );
 
