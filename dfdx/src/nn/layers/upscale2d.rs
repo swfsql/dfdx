@@ -1,18 +1,31 @@
 use crate::prelude::*;
 
-#[derive(Debug, Default, Clone, CustomModule)]
+#[derive(Clone, Copy, Debug, Default, ResetParams, UpdateParams, ZeroGrads)]
+#[cfg_attr(feature = "safetensors", derive(SaveSafeTensors, LoadSafeTensors))]
 pub struct Upscale2D<
     OutHeight: Dim,
     OutWidth: Dim = OutHeight,
     Method: UpscaleMethod = NearestNeighbor,
 > {
+    #[cfg_attr(feature = "safetensors", serialize)]
     pub out_width: OutWidth,
+    #[cfg_attr(feature = "safetensors", serialize)]
     pub out_height: OutHeight,
+    #[cfg_attr(feature = "safetensors", serialize)]
     pub method: Method,
 }
 
 pub type Upscale2DConst<const OH: usize, const OW: usize = OH, M = NearestNeighbor> =
     Upscale2D<Const<OH>, Const<OW>, M>;
+
+impl<Oh: Dim, Ow: Dim, M: UpscaleMethod, E: Dtype, D: Device<E>> BuildOnDevice<E, D>
+    for Upscale2D<Oh, Ow, M>
+{
+    type Built = Self;
+    fn try_build_on_device(&self, _device: &D) -> Result<Self::Built, crate::tensor::Error> {
+        Ok(*self)
+    }
+}
 
 impl<H: Dim, W: Dim, M: UpscaleMethod, Img: GenericUpscale2D<M>> Module<Img>
     for Upscale2D<H, W, M>
@@ -23,15 +36,28 @@ impl<H: Dim, W: Dim, M: UpscaleMethod, Img: GenericUpscale2D<M>> Module<Img>
     }
 }
 
-#[derive(Debug, Default, Clone, CustomModule)]
+#[derive(Clone, Copy, Debug, Default, ResetParams, UpdateParams, ZeroGrads)]
+#[cfg_attr(feature = "safetensors", derive(SaveSafeTensors, LoadSafeTensors))]
 pub struct Upscale2DBy<H: Dim, W: Dim = H, Method: UpscaleMethod = NearestNeighbor> {
+    #[cfg_attr(feature = "safetensors", serialize)]
     pub height_factor: H,
+    #[cfg_attr(feature = "safetensors", serialize)]
     pub width_factor: W,
+    #[cfg_attr(feature = "safetensors", serialize)]
     pub method: Method,
 }
 
 pub type Upscale2DByConst<const HF: usize, const WF: usize = HF, M = NearestNeighbor> =
     Upscale2DBy<Const<HF>, Const<WF>, M>;
+
+impl<H: Dim, W: Dim, M: UpscaleMethod, E: Dtype, D: Device<E>> BuildOnDevice<E, D>
+    for Upscale2DBy<H, W, M>
+{
+    type Built = Self;
+    fn try_build_on_device(&self, _device: &D) -> Result<Self::Built, crate::tensor::Error> {
+        Ok(*self)
+    }
+}
 
 impl<HF: Dim, WF: Dim, C: Dim, H, W, M: UpscaleMethod, E: Dtype, D, T: Tape<E, D>>
     Module<Tensor<(C, H, W), E, D, T>> for Upscale2DBy<HF, WF, M>

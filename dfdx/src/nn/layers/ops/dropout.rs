@@ -55,8 +55,10 @@ impl<const N: usize, S: Shape, E: Dtype, D: Device<E>, T: Tape<E, D>> Module<Ten
 /// let r = dropout.forward_mut(x.trace(grads));
 /// assert_eq!(r.array(), [[2.0, 0.0, 2.0, 0.0, 2.0], [0.0, 2.0, 0.0, 2.0, 2.0]]);
 /// ```
-#[derive(Clone, Debug, CustomModule)]
+#[derive(Clone, Debug, ResetParams, UpdateParams, ZeroGrads)]
+#[cfg_attr(feature = "safetensors", derive(SaveSafeTensors, LoadSafeTensors))]
 pub struct Dropout {
+    #[cfg_attr(feature = "safetensors", serialize)]
     pub p: f64,
 }
 
@@ -64,6 +66,13 @@ impl Default for Dropout {
     /// Sets `self.p` to `0.5`
     fn default() -> Self {
         Self { p: 0.5 }
+    }
+}
+
+impl<E: Dtype, D: Device<E>> BuildOnDevice<E, D> for Dropout {
+    type Built = Self;
+    fn try_build_on_device(&self, _device: &D) -> Result<Self::Built, crate::tensor::Error> {
+        Ok(self.clone())
     }
 }
 

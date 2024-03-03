@@ -1,4 +1,5 @@
 #![cfg_attr(feature = "nightly", feature(generic_const_exprs))]
+#![allow(incomplete_features)]
 
 #[cfg(not(feature = "nightly"))]
 fn main() {
