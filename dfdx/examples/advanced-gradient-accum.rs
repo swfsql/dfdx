@@ -5,9 +5,9 @@ fn main() {
 
     type Model = (
         LinearConstConfig<2, 5>,
-        ReLU,
+        ops::ReLU,
         LinearConstConfig<5, 10>,
-        Tanh,
+        ops::Tanh,
         LinearConstConfig<10, 20>,
     );
     let model = dev.build_module::<f32>(Model::default());

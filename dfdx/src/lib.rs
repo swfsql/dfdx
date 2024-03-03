@@ -178,10 +178,10 @@
 //! struct MlpConfig {
 //!     // Linear with compile time input size & runtime known output size
 //!     linear1: LinearConfig<Const<784>, usize>,
-//!     act1: ReLU,
+//!     act1: ops::ReLU,
 //!     // Linear with runtime input & output size
 //!     linear2: LinearConfig<usize, usize>,
-//!     act2: Tanh,
+//!     act2: ops::Tanh,
 //!     // Linear with runtime input & compile time output size.
 //!     linear3: LinearConfig<usize, Const<10>>,
 //! }
@@ -208,7 +208,7 @@
 //! ```rust
 //! # use dfdx::prelude::*;
 //! # let dev: Cpu = Default::default();
-//! type Arch = (LinearConstConfig<3, 5>, ReLU, LinearConstConfig<5, 10>);
+//! type Arch = (LinearConstConfig<3, 5>, ops::ReLU, LinearConstConfig<5, 10>);
 //! let mut model = dev.build_module::<f32>(Arch::default());
 //! let x: Tensor<(usize, Const<3>), f32, _> = dev.sample_uniform_like(&(100, Const));
 //! let y = model.forward_mut(x);
@@ -233,7 +233,7 @@
 //! ```rust
 //! # use dfdx::prelude::*;
 //! # let dev: Cpu = Default::default();
-//! type Arch = (LinearConstConfig<3, 5>, ReLU, LinearConstConfig<5, 10>);
+//! type Arch = (LinearConstConfig<3, 5>, ops::ReLU, LinearConstConfig<5, 10>);
 //! let arch = Arch::default();
 //! let mut model = dev.build_module::<f32>(arch);
 //! // 1. allocate gradients for the model

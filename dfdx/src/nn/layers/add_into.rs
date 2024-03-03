@@ -89,7 +89,7 @@ mod tests {
         // check if it works in a longer neural net
         type Model = (
             AddInto<(LinearConstConfig<5, 3>, LinearConstConfig<5, 3>)>,
-            ReLU,
+            ops::ReLU,
             LinearConstConfig<3, 1>,
         );
         let mut model = dev.build_module::<TestDtype>(Model::default());

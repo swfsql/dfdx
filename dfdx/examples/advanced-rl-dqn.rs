@@ -10,8 +10,8 @@ const ACTION: usize = 2;
 
 // our simple 2 layer feedforward network with ReLU activations
 type QNetwork = (
-    (LinearConstConfig<STATE, 32>, ReLU),
-    (LinearConstConfig<32, 32>, ReLU),
+    (LinearConstConfig<STATE, 32>, ops::ReLU),
+    (LinearConstConfig<32, 32>, ops::ReLU),
     LinearConstConfig<32, ACTION>,
 );
 

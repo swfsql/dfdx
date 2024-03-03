@@ -9,8 +9,8 @@ const STATE: usize = 4;
 const ACTION: usize = 2;
 
 type PolicyNetwork = (
-    (LinearConstConfig<STATE, 32>, ReLU),
-    (LinearConstConfig<32, 32>, ReLU),
+    (LinearConstConfig<STATE, 32>, ops::ReLU),
+    (LinearConstConfig<32, 32>, ops::ReLU),
     LinearConstConfig<32, ACTION>,
 );
 

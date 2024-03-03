@@ -10,7 +10,7 @@ use crate::prelude::*;
 /// # use dfdx::prelude::*;
 /// # use dfdx::*;
 /// # let dev: Cpu = Default::default();
-/// let mut dropout: DropoutOneIn<2> = Default::default();
+/// let mut dropout: ops::DropoutOneIn<2> = Default::default();
 /// let grads = dropout.alloc_grads();
 /// let x: Tensor<Rank2<2, 5>, f32, _> = dev.ones();
 /// let r = dropout.forward_mut(x.trace(grads));
@@ -49,7 +49,7 @@ impl<const N: usize, S: Shape, E: Dtype, D: Device<E>, T: Tape<E, D>> Module<Ten
 /// ```rust
 /// # use dfdx::prelude::*;
 /// # let dev: Cpu = Default::default();
-/// let mut dropout = Dropout { p: 0.5 };
+/// let mut dropout = ops::Dropout { p: 0.5 };
 /// let grads = dropout.alloc_grads();
 /// let x: Tensor<Rank2<2, 5>, f32, _> = dev.ones();
 /// let r = dropout.forward_mut(x.trace(grads));
