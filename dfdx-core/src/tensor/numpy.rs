@@ -63,7 +63,7 @@ pub(crate) fn write_to_npz<W: Write + Seek, E: Dtype + NumpyDtype>(
     if !filename.ends_with(".npy") {
         filename.push_str(".npy");
     }
-    w.start_file(filename, Default::default())?;
+    w.start_file(filename, zip::write::SimpleFileOptions::default())?;
     write_to_npy(w, shape, data)
 }
 
