@@ -34,7 +34,10 @@ impl MnistTrainSet {
 }
 
 impl ExactSizeDataset for MnistTrainSet {
-    type Item<'a> = (Vec<f32>, usize) where Self: 'a;
+    type Item<'a>
+        = (Vec<f32>, usize)
+    where
+        Self: 'a;
     fn get(&self, index: usize) -> Self::Item<'_> {
         let mut img_data: Vec<f32> = Vec::with_capacity(784);
         let start = 784 * index;

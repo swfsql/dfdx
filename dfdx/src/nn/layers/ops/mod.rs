@@ -83,7 +83,7 @@ pub use pool_2d_avg::{AvgPool2D, AvgPool2DConst};
 pub use pool_2d_max::{MaxPool2D, MaxPool2DConst};
 #[cfg(feature = "nightly")]
 pub use pool_2d_min::{MinPool2D, MinPool2DConst};
-pub use pow::{Powi, Powf};
+pub use pow::{Powf, Powi};
 pub use prelu::{PReLU, PReLUConfig};
 pub use prelu1d::{PReLU1D, PReLU1DConfig};
 pub use realize_to::RealizeTo;

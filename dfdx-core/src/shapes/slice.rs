@@ -75,7 +75,6 @@ impl SliceShape<()> for () {
 
 use super::broadcasts::length;
 
-
 macro_rules! slice_shape {
     ([$($dim:ident)*] [$($range:ident)*] [$($idx:tt)*]) => {
         impl<$($dim: Dim),*, $($range: RangeBounds<usize> + 'static),*> SliceShape<($($range,)*)> for ($($dim,)*)

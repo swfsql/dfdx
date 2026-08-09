@@ -171,7 +171,10 @@ pub(crate) trait LendingIterator {
 }
 
 impl<'q, S: Shape, E> LendingIterator for StridedRefIter<'q, S, E> {
-    type Item<'a> = &'a E where Self: 'a;
+    type Item<'a>
+        = &'a E
+    where
+        Self: 'a;
     #[inline(always)]
     fn next(&'_ mut self) -> Option<Self::Item<'_>> {
         self.index.next().map(|i| &self.data[i])
@@ -179,7 +182,10 @@ impl<'q, S: Shape, E> LendingIterator for StridedRefIter<'q, S, E> {
 }
 
 impl<'q, S: Shape, E> LendingIterator for StridedMutIter<'q, S, E> {
-    type Item<'a> = &'a mut E where Self: 'a;
+    type Item<'a>
+        = &'a mut E
+    where
+        Self: 'a;
     #[inline(always)]
     fn next(&'_ mut self) -> Option<Self::Item<'_>> {
         self.index.next().map(|i| &mut self.data[i])
@@ -187,7 +193,10 @@ impl<'q, S: Shape, E> LendingIterator for StridedMutIter<'q, S, E> {
 }
 
 impl<'q, S: Shape, E> LendingIterator for StridedRefIndexIter<'q, S, E> {
-    type Item<'a> = (&'a E, S::Concrete) where Self: 'a;
+    type Item<'a>
+        = (&'a E, S::Concrete)
+    where
+        Self: 'a;
     #[inline(always)]
     fn next(&'_ mut self) -> Option<Self::Item<'_>> {
         self.index
@@ -197,7 +206,10 @@ impl<'q, S: Shape, E> LendingIterator for StridedRefIndexIter<'q, S, E> {
 }
 
 impl<'q, S: Shape, E> LendingIterator for StridedMutIndexIter<'q, S, E> {
-    type Item<'a> = (&'a mut E, S::Concrete) where Self: 'a;
+    type Item<'a>
+        = (&'a mut E, S::Concrete)
+    where
+        Self: 'a;
     #[inline(always)]
     fn next(&'_ mut self) -> Option<Self::Item<'_>> {
         self.index
